@@ -1,5 +1,5 @@
-model_path: "../Butterfly_Classification/Custom_CNN_Model/Custom_CNN_Model.h5"          # Path to the model file
-resize_shape: [150,150]            # Target resize dimensions for the image
+model_path: "../Butterfly_Classification/Custom_CNN_Model/Custom_CNN_Model.h5"
+resize_shape: [150,150]
 
 targets:
   - 'ADONIS'
