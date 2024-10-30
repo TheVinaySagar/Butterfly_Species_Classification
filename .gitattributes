@@ -1,0 +1,3 @@
+Butterfly_Classification/simpleCNN_Save.h5 filter=lfs diff=lfs merge=lfs -text
+Butterfly_Classification/VGG16_model.h5 filter=lfs diff=lfs merge=lfs -text
+Butterfly_Classification/Custom_CNN_Model/Custom_CNN_Model.h5 filter=lfs diff=lfs merge=lfs -text

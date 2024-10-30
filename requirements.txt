@@ -1,0 +1,15 @@
+# FastAPI for building the web application
+fastapi==0.83.0
+
+# Uvicorn as the ASGI server to run the FastAPI app
+uvicorn==0.17.0
+
+# PIL for handling images, included in the Pillow library
+Pillow==8.4.0
+
+pyyaml==6.0.1
+
+numpy==1.23.5
+
+# TensorFlow for model loading and prediction
+tensorflow==2.6.2
