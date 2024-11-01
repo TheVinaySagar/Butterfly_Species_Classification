@@ -10,8 +10,8 @@ import os.path
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 )
-from Pipeline.Model import get_model_classification
-from Pipeline.training_utilities import (
+from Model_pipeline.Model import get_model_classification
+from Model_pipeline.training_utilities import (
     create_data_generators
 )
 
