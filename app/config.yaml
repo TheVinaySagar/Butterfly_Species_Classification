@@ -1,4 +1,5 @@
-model_path: "../Butterfly_Classification/Custom_CNN_Model/Custom_CNN_Model.h5"
+model_path: "/app/app/Custom_CNN_Model.h5"
+
 resize_shape: [150,150]
 
 targets:

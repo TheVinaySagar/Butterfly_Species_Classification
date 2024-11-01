@@ -1,35 +1,27 @@
-# FROM python:3.9.20-slim
-# COPY app/main.py /deploy/
-# COPY app/config.yaml /deploy/
-# WORKDIR /deploy/
-# RUN apt update
-# RUN apt install -y git
-# RUN apt-get install -y libglib2.0-0
-# RUN pip install --upgrade pip
-# RUN pip install git+https://github.com/TheVinaySagar/Butter-.git
-# EXPOSE 8080
-# ENTRYPOINT uvicorn main:app --host 0.0.0.0 --port 8080
+FROM python:3.8-slim
 
-# Use a slim Python base image
-FROM python:3.9.20-slim
-# Copy application code into the container
-COPY app/main.py /deploy/
-COPY app/config.yaml /deploy/
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    apt-utils \
+    git \
+    libglib2.0-0 && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy the local FastImageClassification package folder into the container
-COPY Butterfly_Classification /deploy/FastImageClassification
+WORKDIR /app
 
-# Set the working directory
-WORKDIR /deploy/
+COPY requirements.txt .
 
-# Update apt and install dependencies
-RUN apt update && apt install -y git libglib2.0-0
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Install the FastImageClassification package from the local directory
-RUN pip install /deploy/FastImageClassification
+COPY . .
 
-# Expose the port
+RUN python -c "import os; assert os.path.exists('app/Custom_CNN_Model.h5'), 'Model file not found'"
+
+ENV MODEL_PATH=/app/app/Custom_CNN_Model.h5
+
+ENV PYTHONPATH=/app
+
 EXPOSE 8080
 
-# Run the application
-ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "1"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "1"]

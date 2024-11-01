@@ -169,19 +169,23 @@
         formData.append("file", imageInput.files[0]);
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/scorefile/", {
+            const response = await fetch("/scorefile/", {
                 method: "POST",
                 body: formData
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                resultDiv.textContent = `${data.predicted_class}`;
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.error) {
+                resultDiv.textContent = `Error: ${data.error}`;
             } else {
-                resultDiv.textContent = "Error: Unable to process the image.";
+                resultDiv.textContent = `${data.predicted_class}`;
             }
         } catch (error) {
-            resultDiv.textContent = "Error: Unable to connect to the server.";
+            console.error('Error:', error);
+            resultDiv.textContent = `Error: ${error.message}`;
         } finally {
             loadingDiv.style.display = "none";
             submitBtn.disabled = false;

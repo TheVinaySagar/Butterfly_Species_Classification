@@ -1,8 +1,7 @@
 # Import necessary libraries from FastAPI
-from fastapi import FastAPI, File, UploadFile, HTTPException
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-
+from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import HTMLResponse,JSONResponse
+import uvicorn
 # Import additional libraries for file handling
 import sys
 import os.path
@@ -27,11 +26,11 @@ async def read_root():
     """
     Serve the index.html file as the main page of the application.
     """
-    with open("index.html", "r") as f:
+    with open("/app/app/index.html", "r") as f:
         return f.read()
 
 # Load the predictor configuration from the specified YAML file
-predictor_config_path = "config.yaml"
+predictor_config_path = os.path.join(os.path.dirname(__file__), 'config.yaml')
 predictor = ImagePredictor.init_from_config_path(predictor_config_path)
 
 # Define the endpoint to upload files for scoring
@@ -49,13 +48,16 @@ async def create_upload_file(file: UploadFile = File(...)):
     Raises:
         HTTPException: If there's an error during file processing.
     """
-    print("dd0")
     try:
         # Perform prediction using the uploaded file
-        print("dd1")
-        result = predictor.predict_from_file(file.file)
-        return result
+        return predictor.predict_from_file(file.file)
     except Exception as e:
-        # Raise an HTTP exception if an error occurs
-        print("dd2")
-        raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": str(e)}
+        )
+    
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8080, reload=True)

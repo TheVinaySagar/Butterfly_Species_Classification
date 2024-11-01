@@ -3,7 +3,18 @@ import numpy as np
 import yaml
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input # type: ignore
 from tensorflow.keras.models import load_model # type: ignore
-from PIL import Image
+from PIL import Image,ImageFile
+import logging
+import tensorflow as tf
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+
+tf.get_logger().setLevel(logging.ERROR)
+
+# Optionally handle truncated images
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class ImagePredictor:
     def __init__(self, model_path, resize_size, targets, pre_processing_function=preprocess_input):
