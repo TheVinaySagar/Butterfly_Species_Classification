@@ -113,7 +113,7 @@ The project implements a comprehensive machine learning pipeline:
 ## 🌐 Deployment
 
 The application is deployed on Render and can be accessed at:
-`https://butterfly-species-classification.onrender.com/`
+[Live Link](https://butterfly-species-classification.onrender.com/)
 
 ### Deployment Steps
 
@@ -165,7 +165,7 @@ The application is deployed on Render and can be accessed at:
 
 - Accuracy: XX%
 - F1 Score: XX
-- Supported Species: [List of butterfly species]
+- Supported Species: /app/config.yaml #Can see there
 
 ## 🐳 Container Registry
 
@@ -173,10 +173,10 @@ The project's Docker image is available on GitHub Container Registry. You can fi
 
 ```bash
 # Pull specific version
-docker pull ghcr.io/yourusername/butterfly-classifier:v1.0.0
+docker pull ghcr.io/thevinaysagar/butterfly_species_classification/my-image-name:latest
 
 # Pull latest
-docker pull ghcr.io/yourusername/butterfly-classifier:latest
+docker pull ghcr.io/thevinaysagar/butterfly_species_classification/my-image-name:latest
 ```
 
 ### Available Tags
@@ -197,7 +197,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- Your Name - [GitHub Profile](https://github.com/TheVinaySagar)
+- Vinay Sagar - [GitHub Profile](https://github.com/TheVinaySagar)
 
 ## 🙏 Acknowledgments
 
