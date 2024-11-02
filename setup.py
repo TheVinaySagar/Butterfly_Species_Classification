@@ -16,7 +16,7 @@ setup(
     version='0.1.0',
     description='Library for butterfly image classification',
     author='Vinay Sagar',
-    author_email='vinaysagar4445@gmail.com',  # Replace with your email
+    author_email='vinaysagar4445@gmail.com',
     url='https://github.com/TheVinaySagar/Butterfly_Classification',
     license='MIT',
     install_requires=REQUIRED,
