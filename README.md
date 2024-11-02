@@ -340,11 +340,10 @@ data_augmentation = Sequential([
 
 ### Performance Metrics
 
-| Metric | Train | Validation | Test |
-|--------|--------|------------|------|
-| Accuracy | XX% | XX% | XX% |
-| Top-5 Accuracy | XX% | XX% | XX% |
-| Loss | X.XXX | X.XXX | X.XXX |
+| Metric | Train | Validation |
+|--------|--------|------------|
+| Accuracy | 89.5% | 80% |
+| Loss | 0.530 | 1.04 |
 
 ## 🌐 Deployment
 
@@ -398,12 +397,6 @@ The application is deployed on Render and can be accessed at:
     └── tempCodeRunnerFile.py
     └── Custom_CNN_Model_Architecture.png
 ```
-
-## 📈 Model Performance
-
-- Accuracy: XX%
-- F1 Score: XX
-- Supported Species: /app/config.yaml #Can see there
 
 ## 🐳 Container Registry
 
