@@ -185,7 +185,6 @@ model.compile(
   <img src="Custom_CNN_Model_Architecture.png" alt="Model Architecture">
 </div>
 
-![screenshot](Custom_CNN_Model_Architecture.png)
 To generate the model visualization:
 ```python
 from tensorflow.keras.utils import plot_model
