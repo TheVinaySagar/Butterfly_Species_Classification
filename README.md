@@ -110,7 +110,7 @@ The project implements a comprehensive machine learning pipeline:
 5. API Integration
 6. Deployment Pipeline
 
-## 🧠 Model Architectures
+<!-- ## 🧠 Model Architectures -->
 
 <!-- ### Base CNN Model
 
