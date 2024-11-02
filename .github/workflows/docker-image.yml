@@ -17,7 +17,6 @@ jobs:
       run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u TheVinaySagar --password-stdin
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ghcr.io/TheVinaySagar/Butterfly_Species_Classification/my-image-name:latest
-
+      run: docker build . --file Dockerfile --tag ghcr.io/thevinaysagar/butterfly_species_classification/my-image-name:latest
     - name: Push the Docker image
-      run: docker push ghcr.io/USERNAME/REPOSITORY_NAME/my-image-name:latest
+      run: docker push ghcr.io/thevinaysagar/butterfly_species_classification/my-image-name:latest
