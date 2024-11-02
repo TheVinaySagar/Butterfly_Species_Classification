@@ -110,9 +110,9 @@ The project implements a comprehensive machine learning pipeline:
 5. API Integration
 6. Deployment Pipeline
 
-## 🧠 Model Architecture
+## 🧠 Model Architectures
 
-### Base CNN Model
+<!-- ### Base CNN Model
 
 The project uses a Convolutional Neural Network (CNN) with the following architecture:
 
@@ -185,16 +185,6 @@ model.compile(
   <img src="Custom_CNN_Model_Architecture.png" alt="Model Architecture">
 </div>
 
-To generate the model visualization:
-```python
-from tensorflow.keras.utils import plot_model
-
-plot_model(model, 
-          to_file='docs/images/model_architecture.png',
-          show_shapes=True,
-          show_layer_names=True)
-```
-
 ### Performance Metrics
 
 | Metric | Value |
@@ -218,7 +208,143 @@ data_augmentation = Sequential([
 
 - Full Model Size: ~1.1 MB
 - Quantized Model Size: ~300 KB
+ -->
 
+## 🧠 Model Architecture
+
+### Deep CNN Model Overview
+
+The model implements a deep Convolutional Neural Network (CNN) architecture specifically designed for butterfly species classification, consisting of four convolutional blocks followed by dense layers for classification.
+
+```
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)             (None, 148, 148, 32)      896       
+batch_normalization         (None, 148, 148, 32)      128       
+max_pooling2d              (None, 74, 74, 32)        0         
+                                                                 
+conv2d_1 (Conv2D)          (None, 72, 72, 64)        18,496     
+batch_normalization_1      (None, 72, 72, 64)        256       
+max_pooling2d_1           (None, 36, 36, 64)        0         
+                                                                 
+conv2d_2 (Conv2D)          (None, 34, 34, 128)       73,856     
+batch_normalization_2      (None, 34, 34, 128)       512       
+max_pooling2d_2           (None, 17, 17, 128)       0         
+                                                                 
+conv2d_3 (Conv2D)          (None, 15, 15, 256)       295,168    
+batch_normalization_3      (None, 15, 15, 256)       1,024      
+max_pooling2d_3           (None, 7, 7, 256)         0         
+                                                                 
+global_average_pooling2d   (None, 256)               0          
+dense                     (None, 512)                131,584    
+dropout                   (None, 512)                0          
+dense_1                   (None, 75)                 38,475     
+=================================================================
+Total params: 560,395
+Trainable params: 559,435
+Non-trainable params: 960
+```
+
+### Architecture Details
+
+#### Convolutional Blocks
+
+1. **First Block**
+   - Conv2D: 32 filters, 3×3 kernel
+   - Batch Normalization
+   - MaxPooling2D (2×2)
+   - Output: 74×74×32
+
+2. **Second Block**
+   - Conv2D: 64 filters, 3×3 kernel
+   - Batch Normalization
+   - MaxPooling2D (2×2)
+   - Output: 36×36×64
+
+3. **Third Block**
+   - Conv2D: 128 filters, 3×3 kernel
+   - Batch Normalization
+   - MaxPooling2D (2×2)
+   - Output: 17×17×128
+
+4. **Fourth Block**
+   - Conv2D: 256 filters, 3×3 kernel
+   - Batch Normalization
+   - MaxPooling2D (2×2)
+   - Output: 7×7×256
+
+#### Classification Head
+- Global Average Pooling 2D
+- Dense Layer (512 units)
+- Dropout Layer (for regularization)
+- Output Layer (75 units for species classification)
+
+### Model Properties
+
+- **Total Parameters**: 560,395
+- **Trainable Parameters**: 559,435
+- **Non-trainable Parameters**: 960
+- **Input Shape**: (150, 150, 3)
+- **Output Classes**: 75 butterfly species
+
+### Key Features
+
+1. **Progressive Feature Extraction**
+   - Channel depth increases gradually: 32 → 64 → 128 → 256
+   - Spatial dimensions reduce from 148×148 to 7×7
+
+2. **Regularization Techniques**
+   - Batch Normalization after each convolution
+   - Dropout (before final classification)
+   - Global Average Pooling for feature aggregation
+
+3. **Memory Efficiency**
+   - Global Average Pooling reduces parameters
+   - Systematic reduction in spatial dimensions
+
+### Training Configuration
+
+```python
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+    loss='categorical_crossentropy',
+    metrics=['accuracy', tf.keras.metrics.TopKCategoricalAccuracy(k=5)]
+)
+```
+
+### Data Preprocessing
+
+```python
+data_augmentation = Sequential([
+    tf.keras.layers.RandomFlip("horizontal"),
+    tf.keras.layers.RandomRotation(0.2),
+    tf.keras.layers.RandomZoom(0.2),
+    tf.keras.layers.RandomBrightness(0.2),
+    tf.keras.layers.RandomContrast(0.2),
+])
+```
+
+### Model Architecture Diagram
+
+<div align="center">
+  <img src="Custom_CNN_Model_Architecture.png" alt="CNN Architecture">
+</div>
+
+### Loss and Accuracy Curves
+
+<div align="center">
+  <img src="Loss_and_Accuracy_Curves.png" alt="Training and Validation Curves">
+</div>
+
+### Performance Metrics
+
+| Metric | Train | Validation | Test |
+|--------|--------|------------|------|
+| Accuracy | XX% | XX% | XX% |
+| Top-5 Accuracy | XX% | XX% | XX% |
+| Loss | X.XXX | X.XXX | X.XXX |
 
 ## 🌐 Deployment
 
