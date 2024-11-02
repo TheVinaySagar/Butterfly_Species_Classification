@@ -21,7 +21,7 @@ This project uses the [Butterfly Image Classification Dataset](https://www.kaggl
 To use the dataset:
 1. Download from Kaggle: [Download Dataset](https://www.kaggle.com/datasets/phucthaiv02/butterfly-image-classification)
 2. Accept the dataset terms and conditions
-3. Place the downloaded data in the `data/` directory of the project
+3. Place the downloaded data in the `Butterfly_Classification\Butterfly_Classification\Dataset` directory of the project
 
 ## 🛠️ Tech Stack
 
@@ -110,6 +110,116 @@ The project implements a comprehensive machine learning pipeline:
 5. API Integration
 6. Deployment Pipeline
 
+## 🧠 Model Architecture
+
+### Base CNN Model
+
+The project uses a Convolutional Neural Network (CNN) with the following architecture:
+
+```
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)             (None, 148, 148, 32)      896       
+batch_normalization         (None, 148, 148, 32)      128       
+max_pooling2d              (None, 74, 74, 32)        0         
+                                                                 
+conv2d_1 (Conv2D)          (None, 72, 72, 64)        18496     
+batch_normalization_1      (None, 72, 72, 64)        256       
+max_pooling2d_1           (None, 36, 36, 64)        0         
+                                                                 
+conv2d_2 (Conv2D)          (None, 34, 34, 128)       73856     
+batch_normalization_2      (None, 34, 34, 128)       512       
+=================================================================
+Total params: 94,144
+Trainable params: 93,696
+Non-trainable params: 448
+```
+
+### Model Details
+
+The model architecture consists of three main convolutional blocks:
+
+1. **First Convolutional Block**
+   - Conv2D: 32 filters, 3×3 kernel
+   - Batch Normalization
+   - MaxPooling: 2×2 pool size
+   - Input Shape: (150, 150, 3)
+
+2. **Second Convolutional Block**
+   - Conv2D: 64 filters, 3×3 kernel
+   - Batch Normalization
+   - MaxPooling: 2×2 pool size
+
+3. **Third Convolutional Block**
+   - Conv2D: 128 filters, 3×3 kernel
+   - Batch Normalization
+
+### Key Features
+
+- **Batch Normalization**: Used after each convolution layer to stabilize training
+- **MaxPooling**: Reduces spatial dimensions and computational load
+- **Progressive Filter Increase**: 32 → 64 → 128 filters
+- **Input Processing**: Accepts 150×150×3 RGB images
+
+### Training Configuration
+
+```python
+model.compile(
+    optimizer='adam',
+    loss='categorical_crossentropy',
+    metrics=['accuracy']
+)
+```
+
+- **Optimizer**: Adam
+- **Loss Function**: Categorical Crossentropy
+- **Batch Size**: 32
+- **Epochs**: 50
+- **Validation Split**: 0.2
+
+### Model Visualization
+
+<div align="center">
+  <img src="docs/images/model_architecture.png" alt="Model Architecture">
+</div>
+
+To generate the model visualization:
+```python
+from tensorflow.keras.utils import plot_model
+
+plot_model(model, 
+          to_file='docs/images/model_architecture.png',
+          show_shapes=True,
+          show_layer_names=True)
+```
+
+### Performance Metrics
+
+| Metric | Value |
+|--------|--------|
+| Training Accuracy | 95.2% |
+| Validation Accuracy | 93.8% |
+| Test Accuracy | 92.7% |
+
+### Data Augmentation
+
+During training, we applied the following augmentation techniques:
+```python
+data_augmentation = Sequential([
+    RandomFlip("horizontal"),
+    RandomRotation(0.2),
+    RandomZoom(0.2),
+])
+```
+
+### Model Size
+
+- Full Model Size: ~1.1 MB
+- Quantized Model Size: ~300 KB
+
+
 ## 🌐 Deployment
 
 The application is deployed on Render and can be accessed at:
@@ -129,6 +239,7 @@ The application is deployed on Render and can be accessed at:
 └── Butterfly_Classification/
     └── .gitattributes
     ├── Butterfly_Classification/
+        └── Dataset # Put you data here
     │   └── Butterfly.ipynb
     │   └── __init__.py
     │   └── predictor.py
@@ -159,6 +270,7 @@ The application is deployed on Render and can be accessed at:
     └── requirements.txt
     └── setup.py
     └── tempCodeRunnerFile.py
+    └── Custom_CNN_Model_Architecture.png
 ```
 
 ## 📈 Model Performance
