@@ -348,7 +348,7 @@ data_augmentation = Sequential([
 ## 🌐 Deployment
 
 The application is deployed on Render and can be accessed at:
-[Live Link](https://butterfly-species-classification.onrender.com/)
+[Live Link](https://butterflyworld.onrender.com/)
 
 ### Deployment Steps
 
